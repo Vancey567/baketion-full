@@ -1,0 +1,76 @@
+@import './variables';
+@import '~noty/src/noty.scss'; // we are getting from the node modules. Check it these folders are there in the nodemodule folder.
+@import '~noty/src/themes/mint.scss';
+
+body{
+    font-family: 'Lato', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: $dark;
+}
+
+nav li:last-child a {   // It will select the last li tag
+    background: $primary;
+    &:hover{
+        background: $primary-hover;
+    }
+}
+
+nav li a {
+    transition: $smooth; // It will give transition of .3 seconds on all a tags. FROM _varibales.scss
+    &:hover {
+        color: $primary;
+    }
+}
+
+section.hero{
+    background: $secondary;
+}
+
+.size {
+    background: $secondary;
+}
+
+.add-to-cart {
+    border: 2px solid $primary;
+    color: $primary;
+    transition: $smooth;
+    &:hover {
+        border-color: $pure;
+        background: $primary;
+        color: $pure;
+    }
+    &:focus {
+        outline: none; // This will remove border from the button.
+    }
+}
+
+.btn-primary {
+    background: $primary;
+    transition: $smooth;
+    &:hover {
+        background: $primary-hover;
+    }
+}
+
+section.cart {
+    background: $secondary;
+    .amount {
+        color: $primary;
+    }
+}
+
+section.login {
+    background: $secondary;
+    min-height: calc(100vh - 86px); // This will remove the extra space(of navbar) taken by the section when giving min-height: 100vh;
+    a {
+        color: $primary;
+        &:hover {
+            color: $primary-hover;
+        }
+    }
+}
+
+.noty_theme_mint {
+    border-radius: 50px!important;
+    padding-left: 8px!important;
+}

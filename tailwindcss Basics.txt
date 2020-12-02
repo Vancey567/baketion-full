@@ -1,0 +1,54 @@
+1. <nav class="container mx-auto flex items-center justify-between">
+=> container: This will create a container.
+=> mx-auto: "Like Bootstarp." mx-auto This will create a container and mx-auto means margin auto which will create some margine from left and right of some pixel to give a great looking container. Somewhat like bootstarp 12 boxes. It will leave 1 box from left and right.
+=> flex: This will apply the flex and gives the flex properties with just one line of code. (Two Divs comes in one line)
+=> items-center: It is a flex property that will center the content from all four side. 
+=> justify-between: It is a flex property that will gives the equal spaces between the two div (push one div to left and other to right)
+=> justify-around: It flex the content around some other parent element
+
+2. class="h-40 ml-6 mr-6 mb-8 mt-8"
+    =>h-40: h means height
+    => ml: gives margin from left.
+    => mr: for right margin
+    => mb: for bottom margin
+
+3. class="inline-block px-4 py-2 rounded-full pb-4"
+    => px-4: means padding in horizontal or x axis (Left and right)
+    => py-4: means padding in vertical or y axis (top and bottom)
+    => pb-4: means padding form bottom
+    => rounded-full: means it will give a round shape
+    => .p-4	padding: 1rem;
+    => padding-left: 1rem;
+       padding-right: 1rem;
+
+4. nav li a {
+    &:hover {
+        color: $primary;
+    }
+}
+    => In scss we can use hover property like this. The Nesting way
+
+5. class="text-lg text-6xl font-bold uppercase"
+    => lg: lg means large
+    => 6xl: It will increase the size 
+    => font-bold: It will make the text bold
+    => uppercase: convert the text in uppercase
+
+6. class="w-1/2"
+    => w-1/2: this means it will take the 50% of the total width
+
+7. class="grid grid-cols-4 col-gap-12 row-gap-16"
+    => grid: gives all properties of grid
+    => grid-cols-4: divide the screen into 4 columns
+    => grid-rows-4: divide the screen into 4 rows
+    => col-gap-12: gives gap/padding between the created grid boxes column wise i.e. from left and right
+    => row-gap-16: gives gap/padding between the created grid boxes rows wise. i.e. from top and bottom
+
+8. class="flex items-center border-b border-gray-300"
+    => border-b: It means boder from bottom
+    => border-gray-300: gray-300 is tailwind css color/property which will give the color gray with width of 300
+
+9. class=" flex justify-center"
+    justify-center: centers the div horizontally
+
+10. min-height: calc(100vh-86px); // This will remove the extra space(of navbar) taken by the section when giving min-height: 100vh;

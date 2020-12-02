@@ -1,0 +1,36 @@
+{
+  "name": "realtime-pizza",
+  "version": "1.0.0",
+  "description": "My First Realtime-Pizza app",
+  "main": "index.js",
+  "author": "Jay Mishra",
+  "scripts": {
+    "serve": "node server.js",
+    "dev": "nodemon server.js",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "connect-mongo": "^3.2.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.1",
+    "laravel-mix": "^5.0.7",
+    "mongoose": "^5.10.11",
+    "noty": "^3.2.0-beta"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.12"
+  }
+}

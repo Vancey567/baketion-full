@@ -1,0 +1,79 @@
+//1. These devDependencies are used only for development. We dont need these when we will deploy it on server
+    "devDependencies": { 
+        "nodemon": "^2.0.6"
+    }
+
+ 
+//2. Create these scripts manually in package.json file
+    "scripts": {
+        "serve": "node server.js", // This will be used while deploying
+        "dev": "nodemon server.js" // This will be used while development
+    },
+
+//3. To run these above scripts write in terminal
+        npm run script_name 
+        eg: npm run dev
+        eg: npm run serve
+//4. In case of Yarn write
+        yarn script_name
+        eg:yarn dev
+
+//5. To post the code on gitHub install a .git file in the realtime-pizza folder by typing the code 
+        git init     // It will create a .git file in realtime-pizza folder
+
+//6. To ignore some special/encrypted file to be uploaded on gitHub create a folder named ".gitignore" in the realtime-pizza folder
+
+//7. To Commit/ Upload your codes on gitHub use
+        1. git commit -m 'initial'
+
+//8. Now install Laravel-mix in your project using code  from Larval-mix.com where --D means in Development devDependencies it wont be used after development
+        1. yarn add laravel-mix --D
+
+//9. After installation Laravel-mix, use the below code this will copy a file from node_modules/laravel-mix/setup and it will paste it  to your home/root folder denoted by '.\'
+    1. copy node_modules\laravel-mix\setup\webpack.mix.js .\
+
+   **By default the code is,
+     cp node_modules/laravel-mix/setup/webpack.mix.js ./
+     which is not recognised by windows so change "cp" to "copy" and '/' to '\' it will solve the error 
+**NOW you can see webpack.mix.js in your realtime-pizza folder. It has everything written in it what are the methods available to us etc
+
+//10. The files inside the resources folder has to be compiled and stored inside the public folder. 
+// To do this change the mix.js() code inside the webpack.mix.js to the src i.e. public folder 
+// so thatit will compile the codes inside the resources folder and it will store it in public folder
+    1. mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/'); //'src/app.js' is the file you want to compile and 'dist/' is the destination to store the file after compilations. In the same way it also has the code for scss
+ ***2. Chnage the above code to your folder structure: mix.js('resources/js/app.js', 'public/js/app.js').sass('resources/scss/app.scss', 'public/css/app.css');
+
+// 11. copy some scripts from the laravel docs and paste in it package.json folder in scripts
+    "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+
+// 12. cross-env: which is being used in the production must be installed
+    1. Go to terminal and write: yarn add cross-env --save-dev   It will be installed
+
+//13. run 'yarn watch' in terminal if it gives error saying that watch not found that means that the "script" code 
+    // that you wrote manually is not saved yet. Try saving it again it might give error asking you to compare or overwrite
+    // click on compare you will find that on one side the script code is not present. Close the compare tab and
+    // click on "OVERWRITE" by saving it. RUN THE COMMAND "yarn watch" again. It will be installed
+
+    // Again some error stating cross-env 
+    // yarn add cross-env --save-dev   RUN THIS command again
+    // yarn watch RUN THIS command again
+    // you will now see The below output. *********************Hurray Laravel-mix installed************
+    DONE  Compiled successfully in 24175ms                                                                                                                      11:53:30 AM
+
+                Asset      Size          Chunks             Chunk Names
+    /public/js/app.js  4.59 KiB  /public/js/app  [emitted]  /public/js/app
+    public/css/app.css   0 bytes  /public/js/app  [emitted]  /public/js/app
+
+14. **EXTRA** const expressLayout = require("express-ejs-layouts") 
+    // Helps in using same code on different pages by creating layouts of certain parts like navbar, body, footer.
+    // For that Create a file naming layout.ejs in views folder of the projects and
+
+15. ** TO Import data in Compass don't write anything in "id". leave it empty it will automatically generate some id 
+    => "id": {
+            
+        },
