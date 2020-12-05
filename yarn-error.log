@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add axios
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add bcrypt
 
 PATH: 
   C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\MinGW\bin;C:\Program Files\Java\jdk-15\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\Program Files (x86)\Yarn\bin\;C:\Users\Lenovo User\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Lenovo User\AppData\Roaming\npm;C:\src\flutter\flutter\bin;C:\Users\Lenovo User\.dotnet\tools;C:\Users\Lenovo User\AppData\Local\Yarn\bin
@@ -33,6 +33,7 @@ npm manifest:
     },
     "license": "MIT",
     "dependencies": {
+      "axios": "^0.21.0",
       "connect-mongo": "^3.2.0",
       "cross-env": "^7.0.2",
       "dotenv": "^8.2.0",
@@ -42,7 +43,8 @@ npm manifest:
       "express-flash": "^0.0.2",
       "express-session": "^1.17.1",
       "laravel-mix": "^5.0.7",
-      "mongoose": "^5.10.11"
+      "mongoose": "^5.10.11",
+      "noty": "^3.2.0-beta"
     },
     "devDependencies": {
       "nodemon": "^2.0.6",
@@ -1379,6 +1381,13 @@ Lockfile:
       num2fraction "^1.2.2"
       postcss "^7.0.32"
       postcss-value-parser "^4.1.0"
+  
+  axios@^0.21.0:
+    version "0.21.0"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
+    integrity sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
+    dependencies:
+      follow-redirects "^1.10.0"
   
   babel-code-frame@^6.26.0:
     version "6.26.0"
@@ -3322,7 +3331,7 @@ Lockfile:
       inherits "^2.0.3"
       readable-stream "^2.3.6"
   
-  follow-redirects@^1.0.0:
+  follow-redirects@^1.0.0, follow-redirects@^1.10.0:
     version "1.13.0"
     resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
     integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
@@ -5076,6 +5085,11 @@ Lockfile:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
     integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
+  
+  noty@^3.2.0-beta:
+    version "3.2.0-beta"
+    resolved "https://registry.yarnpkg.com/noty/-/noty-3.2.0-beta.tgz#cd1117277a1b83c9b08dfc78f968c6c5960d3cfa"
+    integrity sha512-a1//Rth1MTQ/GCvGzwBXrZqCwOPyxiIKMdHT1TlcdrDYBYVfb7vzwsU0N4x+j/HeIQTi6/pbP8lRtY9gBz/d3Q==
   
   npm-run-path@^2.0.0:
     version "2.0.2"

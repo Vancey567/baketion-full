@@ -6,8 +6,10 @@ const ejs = require('ejs')
 const expressLayout = require("express-ejs-layouts") // Helps in using same code on different pages by creating layouts of certain parts like navbar, body, footer. For that create a file naming layout.ejs in views folder of the projects
 const mongoose = require('mongoose')
 const session = require('express-session')
-const flash = require('express-flash') // Here it is used as middleware below :)
+const flash = require('express-flash') // Here it is used as middleware below :). With the help of this flash we can flash our msg's. These flash msg's are stored for single request only. i.e. ek baar koi error aaya to wo error next time refresh karne k baad nahi milega.
 const MongoDbStore = require('connect-mongo')(session) // we are taking session from above
+const passport = require('passport')
+
 
 const PORT = process.env.PORT || 3000 // If there is  any PORT variable inside the environment variable then it will use this else use 3000 "||"" means OR
 
@@ -42,15 +44,23 @@ app.use(session({
     // cookie: {maxAge: 1000 * 10} // It will expire in 15 sec
 })) 
 
-// 
-app.use(flash());
 
+// Passport config
+//we need to create stratagies. since the code is big we will store our stratagies in a separate file and we will import in later. For this we will create a file named passport.js in config folder and import the module here.
+const passportInit = require('./app/config/passport')
+passportInit(passport) // we are passing the passport that we have installed in our project to the app/config/passport.js file. It will be received in the init() there.
+app.use(passport.initialize())
+app.use(passport.session()) // because this passport works using session
+
+
+app.use(flash());
 
 
 // Server gives us response in text/html. then we will have to tell the express that for css file give the response in css only.
 // For that we need to tell the express that where the assets are being kept
 // Assets
 app.use(express.static('./public/')) // Without this it will give MIME error. It will tell the 
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // Global middleware for frontend(layout.ejs-> to show nos. of items in cart dynamically on cart icon in navbar)

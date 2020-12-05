@@ -77,3 +77,59 @@
     => "id": {
             
         },
+
+
+// *****Using Passport for authentication*****
+
+1. First we will have to create a route so that we can post/send data from login/register/another page to some 
+    different url and from their we will store those data to our database.
+
+2. For that go to web.js(where their is all the routes), there we will create a .post route (app.post('')) because
+    we want to post data. we "can have same url as get" (app.post('/register', authController().postRegister)).
+    -> postRegister name must be different because we cannot keep same method in one authController
+
+3. Now go to authController, Now just below the register method create a method name postRegister(req,res){"logic here"}
+
+4. In place of logic we will write const { name, email, password } = req.body 
+    we will receive data from req.body (body object) and we will use object destructuring.
+    const { }, namw, email, password are the fields of "register form". 
+
+5. we will have to connect that postRegister to our frontend also so go to your auth folder and your register.ejs page 
+
+6. To post something from a form we need to give some attributes to it. 
+    -> action="" : This action attribute takes the url to the place where we want to post our data to. So give the route that you have creted (in this case "/register")
+    -> method="" : This takes which method you gonna use there (in this case "POST") can be "GET", "POST", "dialog" 
+
+7. In <input> tag there must be a attribute called name="" and this same name gets received in postRegister() in place of name. So name="name" received as name, name="email" received as email, name="password" received as password in postRegister()
+    -> and button type should be "submit"
+
+8. In input field of password write autocomplete="on"
+
+9. Express js by default do not know what kindda data is being received, Received data can be of different 
+    type like json data, url encoded data, form data etc. We have to explicitely tell express what type of 
+    data is being received explicitely.
+    -> for that Go to server.js
+    -> In Asset we earlier mentioned that we are getting json data (app.use(express.json())
+    -> sometime we might receive url encoded data for that we will have to enable it by writing 
+        app.use(express.urlrencoded( {extended: false} ))
+    
+10. Now create a database to store the regiteraton detail.
+    -> create a Schema, model in user.js in models folder and export it from there
+    -> Now import the model (User) in authController.js
+    -> check every field is filled or not and do other thing 
+
+11. create Hashed password
+    -> import bcrypt using 'yarn add bcrypt'
+    -> then const hashedpassword = await.bcrypt.hash(password, 10) // 1st is kisko hash karna hai(password)
+
+12. 
+
+// basics of using Passport
+1. go to Passportjs.com
+2. select the authentication type you want and install it in you project 
+3. yarn add passport passport-local // These are two different plugins 1st is Passport, 2nd is passport-local
+4. import it in server.js file
+5. Now we need to config passport in server.js, for this 
+    -> app.use(passport.initialize())
+    -> app.use(passport.session()) // because this passport works using session
+    -> after that we need to create stratagies. since the code is big we will store our stratagies in a separate file and we will import in later.

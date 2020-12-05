@@ -8,7 +8,6 @@ function homeController() {
         async index(req, res){
            // Logics are Written in here
             const pizzas = await Menu.find()
-            console.log(pizzas)
             return res.render('home', {pizzas : pizzas})
         }
 
