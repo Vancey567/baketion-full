@@ -11,6 +11,14 @@ function authController() {
             res.render('auth/login')
         },
         postLogin(req, res, next) { // next is a callback, if everything is alright then we call 'next' so that we request gets processed
+            // validating
+            const { email, password } = req.body // we will receive data from req.body (body object) and we will use object destructuring. const { }, name, email, password are the fields of "register form". 
+            // Validate Request i.e. We are receiving the data correctly or not if not then give the validation error
+            if(!email || !password) { // In 2 me se koi v chij empty hai too
+                req.flash('error', 'All fields are required') // This req.flash() must have two parameter 1st is key which caan be any thinng and 2nd is Message.
+                return res.redirect('/login') // koi error aati hai upar k 3 options me too redirect kardo apne register form pe phirse
+           }
+               
             // Login Logic
             passport.authenticate('local', (err, user, info) => {// 1st parameter is which is the strategy we are using (here we are using local) and 2nd parameter is a function. we are getting msg in the 'info' from the done() from file passport.js from login()
                 if(err) {
