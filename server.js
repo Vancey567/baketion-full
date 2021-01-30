@@ -1,73 +1,71 @@
-require('dotenv').config() // This dotenv should be at the top and it is used for cookies, process.env and  session 
+require('dotenv').config()
 const express = require('express')
 const app = express()
-const path  = require('path')
+const path = require('path')
 const ejs = require('ejs')
-const expressLayout = require("express-ejs-layouts") // Helps in using same code on different pages by creating layouts of certain parts like navbar, body, footer. For that create a file naming layout.ejs in views folder of the projects
+const expressLayout = require("express-ejs-layouts")
 const mongoose = require('mongoose')
 const session = require('express-session')
-const flash = require('express-flash') // Here it is used as middleware below :). With the help of this flash we can flash our msg's. These flash msg's are stored for single request only. i.e. ek baar koi error aaya to wo error next time refresh karne k baad nahi milega.
-const MongoDbStore = require('connect-mongo')(session) // we are taking session from above
+const flash = require('express-flash')
+const MongoDbStore = require('connect-mongo')(session)
 const passport = require('passport')
+const Emitter = require('events')
+const AdminBro = require('admin-bro')
+const AdminBroMongoose = require('@admin-bro/mongoose')
+const AdminBroExpress = require('@admin-bro/express')
 
+const Menu = require('./app/models/menu')
+const Order = require('./app/models/order')
+const admin = require('./app/http/middleware/admin')
 
-const PORT = process.env.PORT || 3000 // If there is  any PORT variable inside the environment variable then it will use this else use 3000 "||"" means OR
-
+const PORT = process.env.PORT || 8000
 
 // connecting to Database
-const url = 'mongodb://localhost/pizza';
+const url = 'mongodb://localhost/cake';
 mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: true });
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log('Database connected...');
 }).catch(err => {
-    console.log('connection Failed...')
+    console.log('connection Failed...');
 });
 
 
 // Session store
 let mongoStore = new MongoDbStore({
-    // It is using a connection to connect to our default database and in our database a new table/collection will be created with 'name session' and it will store the "sessions" in it.
-    mongooseConnection: connection, // It is using a connection to connect to our default database. Here we will have or database connection name for now which is already inherited in "connection"
-    collection: 'sessions'// 'sessions' is just a random name. In our database a new table/collection will be created with 'name session' and it will store the "sessions" in it. Here we will tell which collection should be in the database because it will create a table in the database and it will store "sessions" in that table.
+    mongooseConnection: connection,
+    collection: 'sessions'
 })
 
+// Event Emitter
+const eventEmitter = new Emitter()
+app.set('eventEmitter', eventEmitter)
 
-// Sessions config          // Session is valid till the time cookie is value
+// Sessions config    
 app.use(session({
-    secret: process.env.COOKIE_SECRET, // COOKIE_SECRET is the variable containing some secrets stored in .env file It will take that secret value and assign it here in the session
+    secret: process.env.COOKIE_SECRET,
     resave: false,
-    store: mongoStore, // It will store all the session in the database having table/collection named mongoStore.  
+    store: mongoStore,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } // This is cookies life till it will be valid. And it takes time in millisec (1000 * 60 * 60 * 24)this is approx 24hrs
-    // Session is valid till the time co0kie is value
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
     // cookie: {maxAge: 1000 * 10} // It will expire in 15 sec
-})) 
+}))
 
 
 // Passport config
-//we need to create stratagies. since the code is big we will store our stratagies in a separate file and we will import in later. For this we will create a file named passport.js in config folder and import the module here.
 const passportInit = require('./app/config/passport')
-passportInit(passport) // we are passing the passport that we have installed in our project to the app/config/passport.js file. It will be received in the init() there.
+const { log } = require('console')
+passportInit(passport)
 app.use(passport.initialize())
-app.use(passport.session()) // because this passport works using session
-
+app.use(passport.session())
 
 app.use(flash());
 
-
-// Server gives us response in text/html. then we will have to tell the express that for css file give the response in css only.
-// For that we need to tell the express that where the assets are being kept
 // Assets
-app.use(express.static('./public/')) // Without this it will give MIME error. It will tell the 
+app.use(express.static('./public/'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-// Global middleware for frontend(layout.ejs-> to show nos. of items in cart dynamically on cart icon in navbar)
-// app.use((req, res, next) => { // next is a call back, if everything is fine then we will call this.
-//     res.locals.session = req.session //we will mount sessions on locals, which(sessions) we will get from request. This will give error we will not give next statement.
-//     next() // Without calling this we will get error. calling next() is compulsary after middleware(above) code
-// })
 
 // Global middleware
 app.use((req, res, next) => {
@@ -76,15 +74,64 @@ app.use((req, res, next) => {
     next()
 })
 
-// Set Template Engine
+// Template Engine
 app.use(expressLayout)
-app.set('views', path.join(__dirname,'/resources/views'))
-app.set('view engine','ejs')
+app.set('views', path.join(__dirname, '/resources/views'))
+app.set('view engine', 'ejs')
 
-// This app.get code must be written after the Template Engine else it will give error while loading the layouts of the page from the package
-// Import the moules exported from the "web.js" fiile
-require('./routes/web')(app) // require('./routes/web') is a function. (returning function from web.js) which can be called using "()" two parenthesis. We are passing the instance of "app" to the initRotes function in "web.js" file
+// Routes
+require('./routes/web')(app)
 
-app.listen(PORT, (req,res)=>{
+//Admin Bro
+AdminBro.registerAdapter(AdminBroMongoose)
+const User = mongoose.model('User', { name: String, email: String, surname: String })
+const Orders = mongoose.model('order', { customerId: mongoose.Schema.Types.ObjectId, phone: String, address: String, paymentType: String, status: String })
+const AdminBroOptions = {
+    resources: [User, {
+        resource: Menu,
+        options: {
+            sort: {
+                direction: 'asc',
+                sortBy: 'name',
+            },
+        },
+    }, {
+        resource: Orders,
+        options: {
+            sort: {
+                direction: 'asc',
+                sortBy: 'phone',
+            },
+        },
+    }
+],branding: {
+    companyName: 'admin.Baketion.com',
+  },
+}
+const adminBro = new AdminBro(AdminBroOptions)
+const router = AdminBroExpress.buildRouter(adminBro)
+app.use(adminBro.options.rootPath, router).admin
+
+
+// Listening to Server
+const server = app.listen(PORT, (req, res) => {
     console.log(`Listining on PORT ${PORT}`)
+})
+
+// Socket
+const io = require('socket.io')(server)
+io.on('connection', (socket) => {
+    // Join
+    socket.on('join', (orderId) => {
+        socket.join(orderId)
+    })
+})
+
+eventEmitter.on('orderUpdated', (data) => {
+    io.to(`order_${data.id}`).emit('orderUpdated', data)
+})
+
+eventEmitter.on('orderPlaced',(data) => {
+    io.to('adminRoom').emit('orderPlaced', data)
+    // io.to('adminRoom').emit('orderRoom', data)
 })

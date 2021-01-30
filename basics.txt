@@ -130,6 +130,31 @@
 3. yarn add passport passport-local // These are two different plugins 1st is Passport, 2nd is passport-local
 4. import it in server.js file
 5. Now we need to config passport in server.js, for this 
+    -> after that we need to create stratagies. since the code is big we will store our stratagies in a separate file and we will import in later. For this we will create a file named passport.js in config folder and import the module here.
+    -> const passportInit = require('./app/config/passport')
+    -> passportInit(passport) // we are passing the passport that we have installed in our project to the app/config/passport.js file. It will be received in the init() there.
     -> app.use(passport.initialize())
     -> app.use(passport.session()) // because this passport works using session
-    -> after that we need to create stratagies. since the code is big we will store our stratagies in a separate file and we will import in later.
+6. 
+
+***In serializeUser() we are storing data in the session while in deserializeUser we are getting the stored data
+
+*** How to redirect on some error or on anything
+        -> return res.redirect('/login')
+
+// To escape some pages from applying ejs templates use partials
+    1. create a folder named "partials" in views folder
+    2. paste the code (say footer code) in a file with some name(footer.ejs)
+    3. to use the code you have to include the file in the file where you want to use it.
+        Lets say you want to use the code in homepage then include the file in the home page.
+
+        Syntax:
+        <%- include("file Path with .ejs at the end") %>
+
+        <%- include("partials/footer.ejs") %>
+        <%- include("../partials/footer.ejs") %> // Path can vary be carefully
+
+    And in the pages where you don't want to have the template then don't include it in that file.
+
+    
+

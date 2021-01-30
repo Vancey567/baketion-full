@@ -1,25 +1,18 @@
-// This will Fetch data of homepage from database
 const Menu = require('../../models/menu')
+const Pastry = require('../../models/pastry')
 
 function homeController() {
-    // Factory Function: It is a object creational pattern. Simply it is function which returns you objects
     return {
-        // We will create some methods here.
         async index(req, res){
-           // Logics are Written in here
-            const pizzas = await Menu.find()
-            return res.render('home', {pizzas : pizzas})
+            const cakes = await Menu.find() // get all the cakes
+            // const pastrys = await Pastry.find()
+            return res.render('home', {cakes : cakes}) // 1st is key and 2nd is cakes received from database
         }
-
-        // This is called using normal method
-        // index(req, res) {
-        //     Menu.find().then( function(pizzas) {
-        //         console.log(pizzas)
-        //         return res.render('home', { pizzas : pizzas }) // First pizzas is key and the 2nd pizzas is array of objects
-        //     })
+        // async Pastry(req, res) {
+        //     const pastrys = await Pastry.find()
+        //     return res.render('home', {pastrys : pastrys})
         // }
     }
 }
-
 
 module.exports = homeController
