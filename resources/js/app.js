@@ -14,6 +14,18 @@ const hamburger = document.querySelector('.hamburger');
 const navlinks = document.querySelector('.nav-links');
 const links = document.querySelectorAll('.nav-links li');
 
+// const toggleOptions = document.querySelector('#option');
+// const optionsDiv = document.querySelector('.optionsDiv');
+
+// toggleOptions.addEventListener('click', () => {
+//     if (optionsDiv.style.display === 'none') {
+//         optionsDiv.style.display = 'block'
+//     } else {
+//         optionsDiv.style.display = 'none'
+//     }
+// })
+
+
 hamburger.addEventListener('click', () => {
     navlinks.classList.toggle('open');
     links.forEach(link => {

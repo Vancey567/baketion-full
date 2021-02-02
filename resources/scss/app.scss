@@ -269,6 +269,17 @@ footer ul li {
 //     cursor: pointer;
 // }
 
+.optionsDiv {
+    position: absolute;
+    background: #c9c8c8;
+    padding: 5px;
+    box-shadow: 5px 5px 10px 10px #d3d2d2;
+    z-index: 999;
+    &:focus {
+        outline: none;
+    }
+}
+
 @media(max-width:1060px) {
     .container {
         max-width: 90%;

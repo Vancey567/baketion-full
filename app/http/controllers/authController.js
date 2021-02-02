@@ -1,6 +1,8 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+const session = require('express-session')
+
 
 function authController() {
     const _getRedirectUrl = (req) => {
@@ -76,6 +78,8 @@ function authController() {
         },
         logout(req, res) {
             req.logout()
+            // res.clearCookie(mongoStore)
+            // req.session.destroy() // Destr0ing session after logout
             return res.redirect('/login')
         }
     }

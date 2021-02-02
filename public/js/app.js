@@ -37453,7 +37453,16 @@ var prodimg = document.querySelectorAll("#prodimg");
 var deleteProd = document.querySelectorAll("#deleteProd");
 var hamburger = document.querySelector('.hamburger');
 var navlinks = document.querySelector('.nav-links');
-var links = document.querySelectorAll('.nav-links li');
+var links = document.querySelectorAll('.nav-links li'); // const toggleOptions = document.querySelector('#option');
+// const optionsDiv = document.querySelector('.optionsDiv');
+// toggleOptions.addEventListener('click', () => {
+//     if (optionsDiv.style.display === 'none') {
+//         optionsDiv.style.display = 'block'
+//     } else {
+//         optionsDiv.style.display = 'none'
+//     }
+// })
+
 hamburger.addEventListener('click', function () {
   navlinks.classList.toggle('open');
   links.forEach(function (link) {
