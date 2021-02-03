@@ -3,9 +3,9 @@ Learning MERN
 
 # To Setup this project
 1. install all the node module by using command
-    yarn install
+    -> yarn install
 2. install nodemon
-    yarn add nodemon -D
+    -> yarn add nodemon -D
 3. create a database named 'cake' in mongodb compass.
 4. now create collections inside the database 'cake'
   a) menus
